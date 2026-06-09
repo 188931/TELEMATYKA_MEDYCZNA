@@ -1,0 +1,11 @@
+{
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "driver": "SQLite",
+            "name": "Baza_Pielegniarka",
+            "database": "med_data.db"
+        }
+    ],
+    "sqltools.useNodeRuntime": true
+}

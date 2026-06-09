@@ -1,0 +1,10 @@
+{
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "driver": "SQLite",
+            "name": "telematyka_v2",
+            "database": "tele_db"
+        }
+    ]
+}
