@@ -18,6 +18,21 @@ struct LoginResponse: Decodable {
     let status: String
     let message: String?
     let user: LoginUser?
+    let accessToken: String?
+
+    enum CodingKeys: String, CodingKey {
+        case status
+        case message
+        case user
+        case accessToken = "access_token"
+    }
+
+    init(status: String, message: String?, user: LoginUser?, accessToken: String? = nil) {
+        self.status = status
+        self.message = message
+        self.user = user
+        self.accessToken = accessToken
+    }
 }
 
 struct LoginUser: Decodable {

@@ -1,20 +1,28 @@
 import Foundation
 
 struct PatientVisit: Decodable, Identifiable {
-    let id: Int
+    let patientID: Int
     let firstName: String
     let lastName: String
     let pesel: String?
     let visitID: Int
     let visitDate: String
+    let address: String?
+    let latitude: Double?
+    let longitude: Double?
+
+    var id: Int { visitID }
 
     enum CodingKeys: String, CodingKey {
-        case id
+        case patientID = "id"
         case firstName = "first_name"
         case lastName = "last_name"
         case pesel
         case visitID = "visit_id"
         case visitDate = "visit_date"
+        case address
+        case latitude
+        case longitude
     }
 
     var fullName: String { "\(firstName) \(lastName)" }
@@ -57,24 +65,33 @@ struct PatientVisit: Decodable, Identifiable {
         return VisitDateFormatter.stringFromDate(parsedVisitDate, format: "HH:mm")
     }
 
-    /// Visit falls on a calendar day before today.
-    var isPastCalendarDayVisit: Bool {
+    /// Visit falls on a calendar day before the reference date.
+    func isPastCalendarDayVisit(relativeTo reference: Date = Date()) -> Bool {
         guard let parsedVisitDate else { return false }
         let cal = Calendar.current
-        return cal.startOfDay(for: parsedVisitDate) < cal.startOfDay(for: Date())
+        return cal.startOfDay(for: parsedVisitDate) < cal.startOfDay(for: reference)
     }
 
-    /// Cannot start visit: unparsed date, whole day already passed, or before scheduled time.
+    var isPastCalendarDayVisit: Bool {
+        isPastCalendarDayVisit(relativeTo: Date())
+    }
+
+    /// Locked only when scheduled time is still in the future.
     var isStartLocked: Bool {
         guard let visitDate = parsedVisitDate else { return true }
-        if isPastCalendarDayVisit { return true }
         return Date() < visitDate
+    }
+
+    var hasCoordinates: Bool {
+        latitude != nil && longitude != nil
     }
 
     var visitStartStatusLabel: String {
         guard let visitDate = parsedVisitDate else { return "Brak terminu" }
-        if isPastCalendarDayVisit { return "Miniony dzień" }
-        if Date() < visitDate { return "Oczekuje" }
+        if Date() < visitDate {
+            return isPastCalendarDayVisit ? "Zaległa — czeka na godzinę" : "Oczekuje"
+        }
+        if isPastCalendarDayVisit { return "Zaległa — można rozpocząć" }
         return "Można rozpocząć"
     }
 }

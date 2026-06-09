@@ -14,7 +14,7 @@ extension AppViewModel {
                 }
             } else {
                 patients = try await client.request(path: "/patients-with-visits/")
-                nursePatients = uniquePatients(from: patients)
+                nursePatients = try await client.request(path: "/patients/")
             }
         } catch {
             showError(error.localizedDescription)
@@ -33,6 +33,7 @@ extension AppViewModel {
     }
 
     func openPatientDetails(for patient: PatientVisit, asNurse: Bool) {
+        nurseReturnTab = nurseSelectedTab
         currentScreen = .patientPortal(
             pesel: patient.pesel ?? "",
             fullName: patient.fullName,
@@ -41,6 +42,7 @@ extension AppViewModel {
     }
 
     func openPatientDetails(for patient: NursePatient, asNurse: Bool) {
+        nurseReturnTab = 1
         currentScreen = .patientPortal(
             pesel: patient.pesel,
             fullName: patient.fullName,
@@ -48,12 +50,4 @@ extension AppViewModel {
         )
     }
 
-    private func uniquePatients(from visits: [PatientVisit]) -> [NursePatient] {
-        var seen = Set<Int>()
-        return visits.compactMap {
-            guard let pesel = $0.pesel, !seen.contains($0.id) else { return nil }
-            seen.insert($0.id)
-            return NursePatient(id: $0.id, fullName: $0.fullName, pesel: pesel)
-        }
-    }
 }

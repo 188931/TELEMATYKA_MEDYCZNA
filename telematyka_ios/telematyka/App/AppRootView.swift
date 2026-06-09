@@ -33,6 +33,8 @@ struct AppRootView: View {
                             .fixedSize(horizontal: false, vertical: true)
                             .frame(maxWidth: .infinity)
                             .padding(.horizontal, 6)
+                            .accessibleHeading()
+                            .accessibilityAddTraits(.isStaticText)
                     }
                 }
             }
@@ -40,11 +42,17 @@ struct AppRootView: View {
                 Button("OK", role: .cancel) {}
             } message: {
                 Text(viewModel.errorMessage)
+                    .accessibilityLabel("Komunikat błędu: \(viewModel.errorMessage)")
             }
             .sheet(item: $viewModel.activeLoginRole) { LoginSheet(role: $0, viewModel: viewModel) }
             .sheet(item: $viewModel.activeVisitContext) { VisitFormSheet(viewModel: viewModel, context: $0) }
             .sheet(item: $viewModel.activeRescheduleContext) { RescheduleVisitSheet(viewModel: viewModel, context: $0) }
             .sheet(item: $viewModel.activeScheduleNextContext) { ScheduleNextVisitSheet(viewModel: viewModel, context: $0) }
+            .sheet(item: $viewModel.activeDoseCalculatorContext) { DoseCalculatorView(viewModel: viewModel, context: $0) }
+            .sheet(item: $viewModel.activePhotoCaptureContext) { PatientPhotoCaptureView(viewModel: viewModel, context: $0) }
+            .sheet(isPresented: $viewModel.activeAddPatientContext) {
+                AddPatientSheet(viewModel: viewModel)
+            }
         }
     }
 }

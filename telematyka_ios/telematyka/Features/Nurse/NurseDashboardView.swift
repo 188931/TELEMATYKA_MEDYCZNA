@@ -2,21 +2,25 @@ import SwiftUI
 
 struct NurseDashboardView: View {
     @ObservedObject var viewModel: AppViewModel
-    @State private var selectedTab = 0
 
     var body: some View {
-        TabView(selection: $selectedTab) {
+        TabView(selection: $viewModel.nurseSelectedTab) {
             NurseVisitsTabView(viewModel: viewModel)
                 .tabItem { Label("Wizyty", systemImage: "calendar") }
                 .tag(0)
+                .accessibilityLabel("Zakładka Wizyty")
 
             NursePatientsTabView(viewModel: viewModel)
                 .tabItem { Label("Pacjenci", systemImage: "person.3") }
                 .tag(1)
+                .accessibilityLabel("Zakładka Pacjenci")
+
+            RouteMapView(viewModel: viewModel)
+                .tabItem { Label("Trasa", systemImage: "map") }
+                .tag(2)
+                .accessibilityLabel("Zakładka Trasa")
         }
-        .overlay {
-            if viewModel.isLoading { ProgressView("Ładowanie...") }
-        }
+        .accessibleLoading(viewModel.isLoading, label: "Ładowanie danych pielęgniarki")
         .toolbar {
             ToolbarItem(placement: .topBarTrailing) {
                 Menu {
@@ -32,11 +36,19 @@ struct NurseDashboardView: View {
                 } label: {
                     Image(systemName: "person.crop.circle")
                 }
+                .accessibleToolbarAction(
+                    "Menu profilu",
+                    hint: "Pokazuje nazwę użytkownika i opcję wylogowania"
+                )
             }
             ToolbarItem(placement: .topBarTrailing) {
                 Button { Task { await viewModel.refreshPatients() } } label: {
                     Image(systemName: "arrow.clockwise")
                 }
+                .accessibleToolbarAction(
+                    "Odśwież listę",
+                    hint: "Pobiera najnowsze dane pacjentów i wizyt"
+                )
             }
         }
         .task {

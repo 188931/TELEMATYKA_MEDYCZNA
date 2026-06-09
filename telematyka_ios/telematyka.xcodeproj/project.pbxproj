@@ -256,8 +256,11 @@
 				DEVELOPMENT_TEAM = NSD3Z4Z5HN;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSFaceIDUsageDescription = "Używamy Face ID do szybkiego logowania i potwierdzania tożsamości w aplikacji.";
 				INFOPLIST_KEY_NSBiometricsUsageDescription = "Używamy biometrii do szybkiego logowania i potwierdzania tożsamości w aplikacji.";
+				INFOPLIST_KEY_NSCameraUsageDescription = "Aparat służy do dodawania zdjęć pacjenta do kartoteki medycznej.";
+				INFOPLIST_KEY_NSFaceIDUsageDescription = "Używamy Face ID do szybkiego logowania i potwierdzania tożsamości w aplikacji.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Lokalizacja służy do układania trasy do pacjentów.";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Galeria służy do dodawania zdjęć pacjenta do kartoteki medycznej.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -290,8 +293,11 @@
 				DEVELOPMENT_TEAM = NSD3Z4Z5HN;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSFaceIDUsageDescription = "Używamy Face ID do szybkiego logowania i potwierdzania tożsamości w aplikacji.";
 				INFOPLIST_KEY_NSBiometricsUsageDescription = "Używamy biometrii do szybkiego logowania i potwierdzania tożsamości w aplikacji.";
+				INFOPLIST_KEY_NSCameraUsageDescription = "Aparat służy do dodawania zdjęć pacjenta do kartoteki medycznej.";
+				INFOPLIST_KEY_NSFaceIDUsageDescription = "Używamy Face ID do szybkiego logowania i potwierdzania tożsamości w aplikacji.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Lokalizacja służy do układania trasy do pacjentów.";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Galeria służy do dodawania zdjęć pacjenta do kartoteki medycznej.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

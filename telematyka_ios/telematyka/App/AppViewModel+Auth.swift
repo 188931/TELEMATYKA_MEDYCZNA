@@ -22,6 +22,11 @@ extension AppViewModel {
                 throw APIError.message(response.message ?? "Nieznany błąd logowania.")
             }
 
+            if let token = response.accessToken {
+                AuthTokenStore.save(token)
+                setAuthToken(token)
+            }
+
             QuickSignInStore.save(.init(username: username, password: password, role: role))
             activeLoginRole = nil
             if role == .nurse {

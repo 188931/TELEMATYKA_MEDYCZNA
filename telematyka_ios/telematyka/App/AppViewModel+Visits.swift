@@ -12,8 +12,11 @@ extension AppViewModel {
                 bloodPressureSys: Int(form.systolic) ?? 0,
                 bloodPressureDia: Int(form.diastolic) ?? 0,
                 heartRate: Int(form.heartRate) ?? 0,
-                glucoseLevel: Double(form.glucose) ?? 0,
-                notes: form.notes
+                glucoseLevel: Double(form.glucose.replacingOccurrences(of: ",", with: ".")) ?? 0,
+                notes: form.notes,
+                temperatureC: form.temperatureValue,
+                weightKg: form.weightValue,
+                spo2Percent: form.spo2Value
             )
             if isDebugBackendEnabled {
                 try await localServer.saveMeasurements(payload)
@@ -26,7 +29,7 @@ extension AppViewModel {
             }
             activeVisitContext = nil
             activeScheduleNextContext = ScheduleNextContext(
-                patientID: context.patient.id,
+                patientID: context.patient.patientID,
                 patientName: context.patient.fullName
             )
             await refreshPatients()

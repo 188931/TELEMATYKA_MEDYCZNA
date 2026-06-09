@@ -7,6 +7,9 @@ struct MeasurementPayload: Codable {
     let heartRate: Int
     let glucoseLevel: Double
     let notes: String
+    let temperatureC: Double?
+    let weightKg: Double?
+    let spo2Percent: Int?
 
     enum CodingKeys: String, CodingKey {
         case visitID = "visit_id"
@@ -15,6 +18,9 @@ struct MeasurementPayload: Codable {
         case heartRate = "heart_rate"
         case glucoseLevel = "glucose_level"
         case notes
+        case temperatureC = "temperature_c"
+        case weightKg = "weight_kg"
+        case spo2Percent = "spo2_percent"
     }
 }
 
